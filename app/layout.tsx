@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Albert_Sans, Poppins, Sora } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -28,11 +29,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${poppins.variable} ${albertSans.variable} ${sora.variable} } h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${poppins.variable} ${albertSans.variable} ${sora.variable} } h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <div>
+          <Toaster position="top-right" reverseOrder={false} />
+        </div>
+      </body>
     </html>
   );
 }
