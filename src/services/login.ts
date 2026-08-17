@@ -2,11 +2,15 @@ import toast from "react-hot-toast";
 import { api } from "../config/axios.config";
 import { DTOLogin } from "../schemas/login";
 
-export async function LoginAdmin(info: DTOLogin) {
+export async function Login(info: DTOLogin) {
   try {
-    const response = await api.post("/capela/login", info);
-    
+    const response = await api.post("/login", info);
+
+    if (response.data === "ADMINISTRADOR") {
+    }
+
     toast.success(response.data.message);
+
     return response.data;
   } catch (error) {
     return console.log("Error ao logar", error);
