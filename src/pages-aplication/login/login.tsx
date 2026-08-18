@@ -19,12 +19,16 @@ import toast from "react-hot-toast";
 export default function LoginPage() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<DTOLogin>({ resolver: zodResolver(SchemaLogin) });
   const [viewPassword, setViewPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   async function onSubmit(data: DTOLogin) {
-    const response = await Login(data);
+    setLoading(true)
+    const response = await Login(data);    
 
     if (response === undefined) {
+      reset()
+      setLoading(false)
       toast.error("Credenciais inválidas!!");
     }
 
@@ -35,6 +39,7 @@ export default function LoginPage() {
     }
 
 
+    setLoading(false)
     return response;
   }
 
@@ -112,8 +117,8 @@ export default function LoginPage() {
                 )}
               </div>
             </div>
-            <button type="submit" className="bg-primary-100 mt-4 shadow-xl w-[50%] max-lg:w-full p-3 rounded-full text-white font-semibold">
-              FAZER LOGIN
+            <button disabled={loading ? true : false} type="submit" className={`${loading ? "bg-gray-500 text-gray-500" : " bg-primary-100 cursor-pointer hover:bg-[#08265d]" } mt-4 shadow-xl transition-all ease-in-out duration-500 w-[50%] max-lg:w-full p-3 rounded-full text-white font-semibold`}>
+              {loading ? "LOGANDO..." : "FAZER LOGIN"}
             </button>
           </form>
         </div>
