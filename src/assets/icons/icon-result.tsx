@@ -3,8 +3,6 @@ import { InterfaceClass } from "@/src/interfaces/interface-class";
 export default function IconResult({ className }: InterfaceClass) {
   return (
     <svg
-      width="25"
-      height="25"
       viewBox="0 0 25 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +14,7 @@ export default function IconResult({ className }: InterfaceClass) {
       />
       <path
         d="M8.46996 13.31L12.1 16.94L15.73 13.31M12.1 16.94V7.26002M12.1 22.99C10.6699 22.99 9.25377 22.7083 7.93254 22.1611C6.6113 21.6138 5.4108 20.8116 4.39957 19.8004C3.38834 18.7892 2.58619 17.5887 2.03891 16.2674C1.49164 14.9462 1.20996 13.5301 1.20996 12.1C1.20996 10.6699 1.49164 9.25383 2.03891 7.9326C2.58619 6.61136 3.38834 5.41086 4.39957 4.39963C5.4108 3.3884 6.6113 2.58625 7.93254 2.03897C9.25377 1.4917 10.6699 1.21002 12.1 1.21002C14.9882 1.21002 17.7581 2.35736 19.8004 4.39963C21.8426 6.4419 22.99 9.21181 22.99 12.1C22.99 14.9882 21.8426 17.7581 19.8004 19.8004C17.7581 21.8427 14.9882 22.99 12.1 22.99Z"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="2.42"
         strokeLinecap="round"
         strokeLinejoin="round"
