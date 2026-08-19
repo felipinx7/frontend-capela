@@ -1,0 +1,2 @@
+export type TypeSectionDashboardCapela = "DASHBOARD" | "DIZIMO" | "USUARIOS" | "OFERTORIO" | "RELATORIO" | "PERFIL"
+export type TypeSectionDashboardUsuario = "DASHBOARD" | "DIZIMO" | "USUARIOS" | "OFERTORIO" | "RELATORIO" | "PERFIL"

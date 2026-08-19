@@ -81,7 +81,7 @@ export default function LoginPage() {
                     {...register("email")}
                     id=""
                   />
-                  <IconEmail className="absolute top-1/3 left-4" />
+                  <IconEmail className="w-5 text-primary-100 absolute top-1/3 left-4" />
                 </div>
                 {errors.email && (
                   <div className="w-full flex items-center justify-start">
@@ -105,7 +105,7 @@ export default function LoginPage() {
                     id=""
                     required
                   />
-                  <IconLock className="absolute top-1/3 left-4" />
+                  <IconLock className="w-4 text-primary-100 absolute top-1/3 left-4" />
                   <div className="cursor-pointer" onClick={() => handleViewPassword()}>
                     {viewPassword ? <IconEye className="absolute text-primary-100 right-4 top-1/4 w-6" /> : <IconEyesSlash className="absolute text-primary-100 right-4 top-1/4 w-6" />}
                   </div>
