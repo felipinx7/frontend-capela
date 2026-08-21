@@ -3,9 +3,10 @@ import { InterfaceClass } from "@/src/interfaces/interface-class";
 export default function IconDelete({ className }: InterfaceClass) {
   return (
     <svg
-      viewBox="0 0 9 10"
+      viewBox="0 0 10 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      strokeWidth="1.3"
       className={className}
     >
       <path
