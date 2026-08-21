@@ -1,6 +1,6 @@
 "use client"
 
-import { SideBarDashboard } from "@/src/components/sideBar"
+import { SideBarDashboard } from "@/src/components/layout/sideBar"
 import { linksDashboardCapela } from "@/src/constants/links-dashboard"
 import { InterfaceDataCapela } from "@/src/interfaces/interface-data-capela"
 import { GetCapelaDados } from "@/src/services/getCapelaData"
@@ -45,7 +45,7 @@ export function DashboardCapela() {
 
 
     return (
-        <section className="w-full flex items-center justify-start gap-4">
+        <section className="w-full flex items-center h-screen max-lg:flex-col-reverse justify-start gap-4">
             <SideBarDashboard
                 functionLogout={logout}
                 handleSection={handleSection}
@@ -55,7 +55,7 @@ export function DashboardCapela() {
                 nameSection={nameSection}
             />
 
-            <section className="w-[73%] bg-[#F7F6FB] h-[93vh] overflow-y-auto">{sectionsRender[nameSection]}</section>
+            <section className="w-[73%] max-lg:w-full bg-[#F7F6FB] h-[93vh] max-lg:h-[100vh] overflow-y-auto">{sectionsRender[nameSection]}</section>
 
         </section>
 

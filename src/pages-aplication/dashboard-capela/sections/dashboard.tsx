@@ -1,8 +1,8 @@
 import IconResult from "@/src/assets/icons/icon-result";
 import IconSaldo from "@/src/assets/icons/icon-saldo";
 import { PhotoDefaultResultFromSearch } from "@/src/assets/image";
-import { CardResult } from "@/src/components/card-result";
-import { CardShowDizimista } from "@/src/components/card-show-dizimistas";
+import { CardResult } from "@/src/components/ui/card-result-dashboard";
+import { CardShowDizimista } from "@/src/components/ui/card-show-dizimistas";
 import { InterfaceDizimista } from "@/src/interfaces/inteface-dizmista";
 import { GetAllDizimista } from "@/src/services/getAllDizimista";
 import { getAllSpentValue } from "@/src/services/getAllSpentValue";
@@ -39,10 +39,10 @@ export function SectionDashboardCapela() {
 
 
     return (
-        <section className="flex flex-col gap-4 pt-8 pl-6 overflow-y-auto">
+        <section className="style-sections-dashboard gap-4">
             <div className="flex flex-col gap-4">
                 <h3 className="text-primary-100 font-semibold text-[1.4rem]">Informações Gerais</h3>
-                <div className="w-full flex items-center gap-5 justify-between">
+                <div className="w-full max-lg:flex-col flex items-center gap-5 justify-between">
                     <CardResult icon={IconResult} numberResult={inputValuesMonth} textResult="Total de Entradas desse mês" />
                     <CardResult icon={IconResult} numberResult={spentValueMonth} className="rotate-180" textResult="Total de Saídas desse mês" />
                     <CardResult icon={IconSaldo} valueEndSaldo={saldoEnd} numberResult={saldoEnd} className={`${saldoEnd >= 0 ? "text-green-500" : "text-red-500"}`} textResult="Saldo desse Mês" />
@@ -51,17 +51,17 @@ export function SectionDashboardCapela() {
 
             <div className="flex flex-col pt-5 gap-5">
                 <h3 className="text-primary-100 font-semibold text-[1.4rem]">Dizimista Cadastrar</h3>
-                {dizimistas.length > 0 ? (dizimistas.map((link) => (
-                    <div key={link.nome} className="w-full grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4">
-                        <CardShowDizimista nome={link.nome} />
-                    </div>
-                ))) : (
-                    <div className="flex w-full h-full items-center justify-center flex-col">
-                        <img src={PhotoDefaultResultFromSearch.src} />
-                        <p className="text-primary-100">Nenhum dizimista cadastrado</p>
-                    </div>
-                )
-                }
+                <div className={`${dizimistas.length > 0 ? "w-full grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4" : "flex items-center justify-center h-full w-full"}`}>
+                    {dizimistas.length > 0 ? (dizimistas.map((link) => (
+                        <CardShowDizimista key={link.nome} nome={link.nome} />
+                    ))) : (
+                        <div className="flex w-full h-full items-center justify-center flex-col">
+                            <img src={PhotoDefaultResultFromSearch.src} />
+                            <p className="text-primary-100">Nenhum dizimista cadastrado</p>
+                        </div>
+                    )
+                    }
+                </div>
             </div>
         </section>
     )
