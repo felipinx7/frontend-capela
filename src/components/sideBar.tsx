@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { IconLogout } from "../assets/icons/icon-logout";
-import { PhotoDefaultResultFromSearch } from "../assets/image";
+import {  PhotoUserDefault } from "../assets/image";
 import { InterfaceDataDashboard } from "../interfaces/interface-data-dashboard";
 
 export function SideBarDashboard({ functionLogout, handleSection, nameUser, nameSection, sectionsLinks, typeUser }: InterfaceDataDashboard) {
@@ -8,7 +8,7 @@ export function SideBarDashboard({ functionLogout, handleSection, nameUser, name
         <article className="w-[23%] h-[95vh] mt-4 ml-4 p-8 py-5 flex flex-col items-center justify-between bg-primary-100 rounded-[1.7rem]">
             {/* container of porfile */}
             <div className="w-full flex items-center justify-start gap-2">
-                <Image src={PhotoDefaultResultFromSearch} width={55} alt="" />
+                <Image src={PhotoUserDefault} width={55} alt="" />
                 <div className="flex flex-col items-start justify-start">
                     <h3 className="text-[1rem] text-white font-semibold">{nameUser}</h3>
                     <p className="text-[0.8rem] text-white">{typeUser}(a)</p>
