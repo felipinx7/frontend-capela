@@ -1,5 +1,5 @@
-import { PhotoUserDefault } from "../assets/image";
-import { InterfaceDizimista } from "../interfaces/inteface-dizmista";
+import { PhotoUserDefault } from "../../assets/image";
+import { InterfaceDizimista } from "../../interfaces/inteface-dizmista";
 
 export function CardShowDizimista({ nome }: InterfaceDizimista) {
     return (

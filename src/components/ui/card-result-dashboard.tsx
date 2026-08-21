@@ -1,4 +1,4 @@
-import { InterfaceDashboardResult } from "../interfaces/interface-dahboard-results";
+import { InterfaceDashboardResult } from "../../interfaces/interface-dahboard-results";
 
 export function CardResult(props: InterfaceDashboardResult) {
     return (
