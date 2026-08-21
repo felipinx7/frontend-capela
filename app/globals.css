@@ -26,3 +26,17 @@ body {
 
   font-family: var(--font-poppins);
 }
+
+.style-sections-dashboard {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-left: 1.5rem;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .style-sections-dashboard {
+    padding: 2rem;
+  }
+}
