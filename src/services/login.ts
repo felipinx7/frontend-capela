@@ -5,12 +5,7 @@ import { DTOLogin } from "../schemas/login";
 export async function Login(info: DTOLogin) {
   try {
     const response = await api.post("/login", info);
-
-    if (response.data === "ADMINISTRADOR") {
-    }
-
     toast.success(response.data.message);
-
     return response.data;
   } catch (error) {
     return console.log("Error ao logar", error);

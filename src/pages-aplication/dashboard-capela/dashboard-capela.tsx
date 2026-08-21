@@ -5,7 +5,7 @@ import { linksDashboardCapela } from "@/src/constants/links-dashboard"
 import { InterfaceDataCapela } from "@/src/interfaces/interface-data-capela"
 import { GetCapelaDados } from "@/src/services/getCapelaData"
 import { TypeSectionDashboardCapela } from "@/src/types/type-sections-dashboard"
-import { useEffect, useState } from "react"
+import { JSX, useEffect, useState } from "react"
 import { SectionDashboardCapela } from "./sections/dashboard"
 import { SectionDizimoCapela } from "./sections/dizimo"
 import { SectionOfertorryoCapela } from "./sections/ofetorry"
@@ -16,7 +16,7 @@ import { SectionUsersCapela } from "./sections/users"
 export function DashboardCapela() {
     const [dadosCapela, setDadosCapela] = useState<InterfaceDataCapela>()
     const [nameSection, setNameSection] = useState<TypeSectionDashboardCapela>("DASHBOARD")
-    const sectionsRender: Record<TypeSectionDashboardCapela, any> = {
+    const sectionsRender: Record<TypeSectionDashboardCapela, JSX.Element> = {
         DASHBOARD: <SectionDashboardCapela />,
         DIZIMO: <SectionDizimoCapela />,
         OFERTORIO: <SectionOfertorryoCapela />,
@@ -26,14 +26,13 @@ export function DashboardCapela() {
     }
 
     useEffect(() => {
-        async function FetchDadosCapela() {
+        async function FetchDataCapela() {
             const { data } = await GetCapelaDados()
             setDadosCapela({ name: data[0], typeUsuario: data[1] })
             return data
         }
-        FetchDadosCapela()
-    },
-        [])
+        FetchDataCapela()
+    }, [])
 
 
     function logout() {
@@ -45,7 +44,6 @@ export function DashboardCapela() {
     }
 
 
-    console.log(dadosCapela);
     return (
         <section className="w-full flex items-center justify-start gap-4">
             <SideBarDashboard
