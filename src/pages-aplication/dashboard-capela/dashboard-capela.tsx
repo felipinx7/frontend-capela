@@ -15,7 +15,7 @@ import { SectionUsersCapela } from "./sections/users"
 
 export function DashboardCapela() {
     const [dadosCapela, setDadosCapela] = useState<InterfaceDataCapela>()
-    const [nameSection, setNameSection] = useState<TypeSectionDashboardCapela>("DASHBOARD")
+    const [nameSection, setNameSection] = useState<TypeSectionDashboardCapela>("DIZIMO")
     const sectionsRender: Record<TypeSectionDashboardCapela, JSX.Element> = {
         DASHBOARD: <SectionDashboardCapela />,
         DIZIMO: <SectionDizimoCapela />,

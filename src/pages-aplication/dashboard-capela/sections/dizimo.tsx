@@ -1,6 +1,7 @@
 import IconAddPeople from "@/src/assets/icons/icon-add-people";
 import IconSearch from "@/src/assets/icons/icon-search";
 import { PhotoDefaultResultFromSearch } from "@/src/assets/image";
+import { CardCreationDizimista } from "@/src/components/ui/card-creation-dizimista";
 import { CardDizimista } from "@/src/components/ui/card-dizimista";
 import { InterfaceDizimista } from "@/src/interfaces/inteface-dizmista";
 import { GetAllDizimista } from "@/src/services/getAllDizimista";
@@ -51,10 +52,14 @@ export function SectionDizimoCapela() {
                 )) : (
                     <div className="flex items-center justify-center max-lg:justify-start h-screen w-full flex-col">
                         <img src={PhotoDefaultResultFromSearch.src} />
-                      <p className="text-primary-100">Nenhum Dizimista Encontrado</p>
+                        <p className="text-primary-100">Nenhum Dizimista Encontrado</p>
                     </div>
                 )}
             </div>
+
+
+            {/* modals used in section  */}
+            <CardCreationDizimista />
         </section>
     )
 }
