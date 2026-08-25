@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { api } from "../config/axios.config";
-import { DTOLogin } from "../schemas/login";
+import { DTOLogin } from "../schemas/schema-login";
 
 export async function Login(info: DTOLogin) {
   try {
