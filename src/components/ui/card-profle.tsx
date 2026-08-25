@@ -1,8 +1,8 @@
+import { PhotoUserDefault } from "@/src/assets/icons/image";
+import { InterfaceDataDashboard } from "@/src/interfaces/interface-data-dashboard";
 import Image from "next/image";
-import { PhotoUserDefault } from "../assets/image";
-import { InterfaceDataDashboard } from "../interfaces/interface-data-dashboard";
 
-export function CardPorfile({nameUser, typeUser} : InterfaceDataDashboard) {
+export function CardPorfile({ nameUser, typeUser }: InterfaceDataDashboard) {
     return (
         <div className="w-full flex items-center justify-start gap-2">
             <Image src={PhotoUserDefault} width={55} alt="" />

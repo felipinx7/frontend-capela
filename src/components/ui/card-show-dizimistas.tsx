@@ -1,7 +1,7 @@
-import { PhotoUserDefault } from "../../assets/image";
-import { InterfaceDizimista } from "../../interfaces/inteface-dizmista";
+import { PhotoUserDefault } from "@/src/assets/image";
+import { PickCardShowDizimista } from "@/src/types/picks/pick-card-show-dizimista";
 
-export function CardShowDizimista({ nome }: InterfaceDizimista) {
+export function CardShowDizimista({ nome }: PickCardShowDizimista) {
     return (
         <article className="bg-white rounded-[1.5rem] flex items-start justify-start gap-3 py-3 pr-35 pl-3 border-2 border-primary-100">
             <img src={PhotoUserDefault.src} className="w-14 h-14" alt="" />

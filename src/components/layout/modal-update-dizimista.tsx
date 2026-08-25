@@ -1,0 +1,63 @@
+import IconAddPeople from '@/src/assets/icons/icon-add-people'
+import { IconClosed } from '@/src/assets/icons/icon-closed'
+import { InterfaceModalUpdateDizimista } from '@/src/interfaces/interface-modal-update'
+import { DTODizimistaUpdate, SchemaDizimistaUpdate } from '@/src/schemas/schema-dizimista-update'
+import { UpdateDizimista } from '@/src/services/UpdateDizimista'
+import { zodResolver } from '@hookform/resolvers/zod'
+import ReactDOM from 'react-dom'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+
+export function ModalUpdateDizimista({ id, handleOpenModal, updateDizimista, OpenModal }: InterfaceModalUpdateDizimista) {
+    const { register, formState: { errors }, handleSubmit, reset, } = useForm<DTODizimistaUpdate>({ resolver: zodResolver(SchemaDizimistaUpdate) })
+
+    async function onSubmit(data: DTODizimistaUpdate) {
+        const response = await UpdateDizimista({ id: id, nome: data.nome })
+
+        if (response === undefined) {
+            toast.error("Digite um nome diferente do anterior")
+        } else {
+            updateDizimista({ nome: data.nome, id: id })
+            toast.success("Dizimista Atualizado com sucesso!!")
+            handleOpenModal()
+        }
+    }
+
+
+    return ReactDOM.createPortal(
+        <section className={`${OpenModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-0 bg-black/60 transition-all ease-in-out duration-500 absolute w-full h-screen`}>
+            <div className='w-full h-screen flex items-center justify-center'>
+                <form onSubmit={handleSubmit(onSubmit)} className={`bg-white transition-all ease-in-out duration-500 ${OpenModal ? "scale-100 opacity-100" : "scale-150 opacity-0"} w-[30%] flex flex-col rounded-lg h-auto p-10`}>
+                    <div className='flex gap-3 flex-col'>
+
+                        <div className='w-full flex items-center justify-between'>
+                            <h1 className="text-primary-100 font-medium text-[1.1rem]">Atualizar Dizimista</h1>
+                            <button onClick={handleOpenModal} className='hover:bg-gray-400/50 w-8 rounded-[0.3rem] cursor-pointer h-8 flex items-center justify-center' type='button'>
+                                <IconClosed />
+                            </button>
+                        </div>
+
+                        <div className='flex flex-col gap-1 items-start justify-start'>
+                            <p className='text-[0.9rem] text-primary-100'>Nome</p>
+
+                            <div className='relative w-full'>
+                                <input {...register("nome")} type="text" className="w-full pl-8 outline-none placeholder:text-[0.7rem] placeholder:text-primary-100/70 text-primary-100 text-[0.7rem] rounded-full p-3 border border-gray " placeholder='Digite o nome do dizimista' />
+                                <IconAddPeople className='w-4 absolute top-3 left-3 h-5 text-primary-100' />
+                            </div>
+                            {errors.nome && (
+                                <p className='style-error'>{errors.nome?.message}</p>
+                            )}
+                        </div>
+
+                        <div className='w-full flex items-center justify-center mt-4'>
+                            <button type="submit" className='w-auto relative  rounded-[2.1rem] shadow-2xl cursor-pointer hover: py-2  px-8 text-[0.9rem] text-white bg-primary-100'>
+                                Adicionar Dizimista
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>,
+        document.body,
+    )
+}

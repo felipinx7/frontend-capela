@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { IconLogout } from "../../assets/icons/icon-logout";
-import { PhotoUserDefault } from "../../assets/image";
 import { InterfaceDataDashboard } from "../../interfaces/interface-data-dashboard";
+import { PhotoUserDefault } from "@/src/assets/image";
 
 export function SideBarDashboard({ functionLogout, handleSection, nameUser, nameSection, sectionsLinks, typeUser }: InterfaceDataDashboard) {
     return (
