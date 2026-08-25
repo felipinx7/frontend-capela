@@ -4,9 +4,9 @@ import IconEmail from "@/src/assets/icons/icon-email";
 import IconEye from "@/src/assets/icons/icon-eye";
 import IconEyesSlash from "@/src/assets/icons/icon-eyes-slash";
 import IconLock from "@/src/assets/icons/icon-lock";
-import { BackgroundBlueLogin, BackgroundLoginMobile } from "@/src/assets/image/index";
+import { BackgroundBlueLogin, BackgroundLoginMobile } from "@/src/assets/image";
 import { PhotoLoginImage } from "@/src/assets/image/photo-login";
-import { DTOLogin, SchemaLogin } from "@/src/schemas/login";
+import { DTOLogin, SchemaLogin } from "@/src/schemas/schema-login";
 import { Login } from "@/src/services/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   async function onSubmit(data: DTOLogin) {
     setLoading(true)
-    const response = await Login(data);    
+    const response = await Login(data);
 
     if (response === undefined) {
       reset()
@@ -37,7 +37,6 @@ export default function LoginPage() {
     } else {
       router.push("/dashboard-usuario")
     }
-
 
     setLoading(false)
     return response;
@@ -81,11 +80,11 @@ export default function LoginPage() {
                     {...register("email")}
                     id=""
                   />
-                  <IconEmail className="w-5 text-primary-100 absolute top-1/3 left-4" />
+                  <IconEmail className="w-5 text-primary-100 mt-2 absolute top-2 left-4" />
                 </div>
                 {errors.email && (
                   <div className="w-full flex items-center justify-start">
-                    <p className="font-poppins text-red-500 font-light mt-2 text-[0.9rem]">{errors.email?.message}</p>
+                    <p className="style-error">{errors.email?.message}</p>
                   </div>
                 )}
               </div>
@@ -112,12 +111,12 @@ export default function LoginPage() {
                 </div>
                 {errors.senha && (
                   <div className="w-full justify-start items-center">
-                    <p className="font-poppins text-red-500 font-light mt-2 text-[0.9rem]">{errors.senha?.message}</p>
+                    <p className="style-error">{errors.senha?.message}</p>
                   </div>
                 )}
               </div>
             </div>
-            <button disabled={loading ? true : false} type="submit" className={`${loading ? "bg-gray-500 text-gray-500" : " bg-primary-100 cursor-pointer hover:bg-[#08265d]" } mt-4 shadow-xl transition-all ease-in-out duration-500 w-[50%] max-lg:w-full p-3 rounded-full text-white font-semibold`}>
+            <button disabled={loading ? true : false} type="submit" className={`${loading ? "bg-gray-500 text-gray-500" : " bg-primary-100 cursor-pointer hover:bg-[#08265d]"} mt-4 shadow-xl transition-all ease-in-out duration-500 w-[50%] max-lg:w-full p-3 rounded-full text-white font-semibold`}>
               {loading ? "LOGANDO..." : "FAZER LOGIN"}
             </button>
           </form>

@@ -1,26 +1,47 @@
 import IconAddPeople from "@/src/assets/icons/icon-add-people";
 import IconSearch from "@/src/assets/icons/icon-search";
 import { PhotoDefaultResultFromSearch } from "@/src/assets/image";
-import { CardCreationDizimista } from "@/src/components/ui/card-creation-dizimista";
+import { CardCreationDizimista } from "@/src/components/layout/modal-creation-dizimista";
 import { CardDizimista } from "@/src/components/ui/card-dizimista";
-import { InterfaceDizimista } from "@/src/interfaces/inteface-dizmista";
+import { InterfaceDataPorfileDashboard } from "@/src/interfaces/user/interface-data-porfile-dashboard";
+import { DTODizimista } from "@/src/schemas/schema-dizimista";
+import { DTODizimistaUpdate } from "@/src/schemas/schema-dizimista-update";
 import { GetAllDizimista } from "@/src/services/getAllDizimista";
 import { useEffect, useState } from "react";
 
-export function SectionDizimoCapela() {
-    const [dizimistas, setDizimista] = useState<InterfaceDizimista[]>([])
+export function SectionDizimoCapela({ idCapela }: DTODizimista) {
+    const [dizimistas, setDizimista] = useState<InterfaceDataPorfileDashboard[]>([])
+    const [openModalCreated, setOpenModalCreated] = useState(false)
+    const [openModalUpdate, setOpenModalUpdate] = useState(false)
     const [valueInput, setValeuInput] = useState<string>("")
     const dizimistasFiltered = dizimistas.filter((dizimista) => dizimista.nome?.toLocaleUpperCase().includes(valueInput.toUpperCase()))
 
+    function createdDizimista(dizimista: InterfaceDataPorfileDashboard) {
+        setDizimista((prev) => [...prev, dizimista])
+    }
+
+    function updateDizimista(dizimistas: DTODizimistaUpdate) {
+        console.log("VALOR DO NNOME DO dizimistas", dizimistas.nome)
+        setDizimista((prev) => prev.map((user) => (user.id === dizimistas.id ? { ...user, nome: dizimistas.nome ?? user.nome } : user)))
+    }
+
+    function handleModalUpdate() {
+        setOpenModalUpdate((prev) => !prev)
+    }
+
+    function handleOpenModal() {
+        setOpenModalCreated((prev) => !prev)
+    }
 
     useEffect(() => {
         async function FetchDataDizimo() {
             const allDizimistas = await GetAllDizimista()
             setDizimista(allDizimistas?.data.data)
         }
-
         FetchDataDizimo()
     }, [])
+
+    console.log("VALOR DO ESTADO", dizimistas);
 
 
     return (
@@ -37,7 +58,7 @@ export function SectionDizimoCapela() {
                     <IconSearch className="absolute w-4 top-1/3 text-primary-100 left-3" />
                 </div>
 
-                <button className="flex flex-row-reverse text-white h-auto p-2 rounded-[2.1rem] w-auto font-bold text-[0.7rem] text-nowrap items-center bg-primary-100 justify-start pr-3 gap-3">
+                <button onClick={() => handleOpenModal()} className="flex cursor-pointer flex-row-reverse text-white h-auto p-2 rounded-[2.1rem] w-auto font-bold text-[0.7rem] text-nowrap items-center bg-primary-100 justify-start pr-3 gap-3">
                     Adicionar Dizimista
                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                         <IconAddPeople className="w-4 text-primary-100 " />
@@ -48,7 +69,7 @@ export function SectionDizimoCapela() {
 
             <div className="flex overflow-auto h-[65vh] max-lg:h-screen max w-full flex-col gap-2">
                 {dizimistasFiltered.length > 0 ? dizimistasFiltered.map((dizimista) => (
-                    <CardDizimista key={dizimista.nome} nome={dizimista.nome} />
+                    <CardDizimista UpdateDizimista={updateDizimista} id={dizimista.id as string} handleModaAddedMoney={handleModalUpdate} handleModalDelete={handleModalUpdate} handleModalUpdate={handleModalUpdate} handleModalView={handleModalUpdate} key={dizimista.nome} nome={dizimista.nome} />
                 )) : (
                     <div className="flex items-center justify-center max-lg:justify-start h-screen w-full flex-col">
                         <img src={PhotoDefaultResultFromSearch.src} />
@@ -59,7 +80,7 @@ export function SectionDizimoCapela() {
 
 
             {/* modals used in section  */}
-            <CardCreationDizimista />
+            <CardCreationDizimista idCapela={idCapela} createdDizimista={createdDizimista} handleOpenModal={handleOpenModal} onClosed={openModalCreated} />
         </section>
     )
 }

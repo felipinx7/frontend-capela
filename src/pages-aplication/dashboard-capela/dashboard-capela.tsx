@@ -2,7 +2,6 @@
 
 import { SideBarDashboard } from "@/src/components/layout/sideBar"
 import { linksDashboardCapela } from "@/src/constants/links-dashboard"
-import { InterfaceDataCapela } from "@/src/interfaces/interface-data-capela"
 import { GetCapelaDados } from "@/src/services/getCapelaData"
 import { TypeSectionDashboardCapela } from "@/src/types/type-sections-dashboard"
 import { JSX, useEffect, useState } from "react"
@@ -12,13 +11,14 @@ import { SectionOfertorryoCapela } from "./sections/ofetorry"
 import { SectionPorfileCapela } from "./sections/porfile"
 import { SectionRelatorioCapela } from "./sections/relatorio"
 import { SectionUsersCapela } from "./sections/users"
+import { InterfaceDataPorfileDashboard } from "@/src/interfaces/user/interface-data-porfile-dashboard"
 
 export function DashboardCapela() {
-    const [dadosCapela, setDadosCapela] = useState<InterfaceDataCapela>()
-    const [nameSection, setNameSection] = useState<TypeSectionDashboardCapela>("DIZIMO")
+    const [dadosCapela, setDadosCapela] = useState<InterfaceDataPorfileDashboard>()
+    const [nameSection, setNameSection] = useState<TypeSectionDashboardCapela>("DASHBOARD")
     const sectionsRender: Record<TypeSectionDashboardCapela, JSX.Element> = {
         DASHBOARD: <SectionDashboardCapela />,
-        DIZIMO: <SectionDizimoCapela />,
+        DIZIMO: <SectionDizimoCapela idCapela={dadosCapela?.idCapela} />,
         OFERTORIO: <SectionOfertorryoCapela />,
         PERFIL: <SectionPorfileCapela />,
         RELATORIO: <SectionRelatorioCapela />,
@@ -28,8 +28,7 @@ export function DashboardCapela() {
     useEffect(() => {
         async function FetchDataCapela() {
             const { data } = await GetCapelaDados()
-            setDadosCapela({ name: data[0], typeUsuario: data[1] })
-            return data
+            setDadosCapela({ nome: data[0], typeUser: data[1], idCapela: data[2]})
         }
         FetchDataCapela()
     }, [])
@@ -49,9 +48,9 @@ export function DashboardCapela() {
             <SideBarDashboard
                 functionLogout={logout}
                 handleSection={handleSection}
-                nameUser={dadosCapela?.name as string}
+                nameUser={dadosCapela?.nome}
                 sectionsLinks={linksDashboardCapela}
-                typeUser={dadosCapela?.typeUsuario as string}
+                typeUser={dadosCapela?.typeUser}
                 nameSection={nameSection}
             />
 

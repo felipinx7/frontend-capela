@@ -3,7 +3,7 @@ import IconSaldo from "@/src/assets/icons/icon-saldo";
 import { PhotoDefaultResultFromSearch } from "@/src/assets/image";
 import { CardResult } from "@/src/components/ui/card-result-dashboard";
 import { CardShowDizimista } from "@/src/components/ui/card-show-dizimistas";
-import { InterfaceDizimista } from "@/src/interfaces/inteface-dizmista";
+import { InterfaceSectionDashboard } from "@/src/interfaces/interface-section-dashbord";
 import { GetAllDizimista } from "@/src/services/getAllDizimista";
 import { getAllSpentValue } from "@/src/services/getAllSpentValue";
 import { GetOfertorry } from "@/src/services/getOfertorry";
@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 export function SectionDashboardCapela() {
     const [inputValuesMonth, setInputValuesMonth] = useState<number>(0)
     const [spentValueMonth, setSpentValueMonth] = useState<number>(0)
-    const [dizimistas, setDizimista] = useState<InterfaceDizimista[]>([])
+    const [dizimistas, setDizimista] = useState<InterfaceSectionDashboard[]>([])
     const saldoEnd = (inputValuesMonth ?? 0) - (spentValueMonth ?? 0)
 
     useEffect(() => {
@@ -33,7 +33,6 @@ export function SectionDashboardCapela() {
 
         FetchDataPageDashboard()
     }, [])
-
 
 
 
