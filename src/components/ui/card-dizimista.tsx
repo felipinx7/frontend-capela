@@ -6,7 +6,9 @@ import { PhotoUserDefault } from "@/src/assets/image";
 import { InterfaceCardDizimista } from "@/src/interfaces/interface-card-dizimista";
 import { handleStateValeu } from "@/src/utils/handleStateValue";
 import { useState } from "react";
+import { ModalAddedDizimista } from "../layout/modal-added-dizimista";
 import { ModalUpdateDizimista } from "../layout/modal-update-dizimista";
+import { ModalViewDizimista } from "../layout/modal-view-dizimista";
 
 export function CardDizimista(props: InterfaceCardDizimista) {
     // States used in component.
@@ -35,6 +37,9 @@ export function CardDizimista(props: InterfaceCardDizimista) {
 
             {/* Modals utils in card  */}
             <ModalUpdateDizimista OpenModal={openMoldaUpdate} id={props.id} updateDizimista={props.UpdateDizimista} handleOpenModal={() => handleStateValeu(setOpenModalUpdate)} />
+            <ModalAddedDizimista onClosed={openModalAddedMoney} handleOpenModal={() => handleStateValeu(setOpenModalAddedMoney)} idDizimista={props.id as string} idCapela={props.idCapela as string} />
+            <ModalViewDizimista OpenModal={openModalView} id={props.id} handleOpenModal={() => handleStateValeu(setOpenModalView)} />
+
         </article>
     )
 }
