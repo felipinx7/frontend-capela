@@ -7,5 +7,6 @@ export interface InterfaceCardDizimista extends PickCardDizimista {
   handleModalDelete: () => void;
   handleModalView: () => void;
   id: string;
+  idCapela?: string;
   UpdateDizimista: (data: DTODizimistaUpdate) => void;
 }
