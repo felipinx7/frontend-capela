@@ -8,3 +8,4 @@ export function GetOnlySpentAndInputMonth(months: any) {
 
   return onlySpentAndInputOfMonth;
 }
+
