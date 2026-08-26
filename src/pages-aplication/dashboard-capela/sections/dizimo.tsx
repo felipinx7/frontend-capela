@@ -21,7 +21,6 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
     }
 
     function updateDizimista(dizimistas: DTODizimistaUpdate) {
-        console.log("VALOR DO NNOME DO dizimistas", dizimistas.nome)
         setDizimista((prev) => prev.map((user) => (user.id === dizimistas.id ? { ...user, nome: dizimistas.nome ?? user.nome } : user)))
     }
 
@@ -39,10 +38,8 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
             setDizimista(allDizimistas?.data.data)
         }
         FetchDataDizimo()
-    }, [])
-
-    console.log("VALOR DO ESTADO", dizimistas);
-
+    }, []
+    )
 
     return (
         <section className="style-sections-dashboard gap-4">
@@ -69,7 +66,16 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
 
             <div className="flex overflow-auto h-[65vh] max-lg:h-screen max w-full flex-col gap-2">
                 {dizimistasFiltered.length > 0 ? dizimistasFiltered.map((dizimista) => (
-                    <CardDizimista UpdateDizimista={updateDizimista} id={dizimista.id as string} handleModaAddedMoney={handleModalUpdate} handleModalDelete={handleModalUpdate} handleModalUpdate={handleModalUpdate} handleModalView={handleModalUpdate} key={dizimista.nome} nome={dizimista.nome} />
+                    <CardDizimista
+                        UpdateDizimista={updateDizimista}
+                        id={dizimista.id as string}
+                        handleModaAddedMoney={handleModalUpdate}
+                        handleModalDelete={handleModalUpdate}
+                        idCapela={idCapela}
+                        handleModalUpdate={handleModalUpdate}
+                        handleModalView={handleModalUpdate}
+                        key={dizimista.nome}
+                        nome={dizimista.nome} />
                 )) : (
                     <div className="flex items-center justify-center max-lg:justify-start h-screen w-full flex-col">
                         <img src={PhotoDefaultResultFromSearch.src} />

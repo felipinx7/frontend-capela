@@ -7,15 +7,18 @@ import { InterfaceSectionDashboard } from "@/src/interfaces/interface-section-da
 import { GetAllDizimista } from "@/src/services/getAllDizimista";
 import { getAllSpentValue } from "@/src/services/getAllSpentValue";
 import { GetOfertorry } from "@/src/services/getOfertorry";
+import { GetOnlyInputDizimo } from "@/src/utils/GetOnllyInputDizimo";
 import { GetOnlySpentAndInputMonth } from "@/src/utils/GetOnlySpentAndInputMonth";
 import { useEffect, useState } from "react";
 
 
 export function SectionDashboardCapela() {
     const [inputValuesMonth, setInputValuesMonth] = useState<number>(0)
+    const [inputValuesMonthDizimo, setInputValuesMonthDizimo] = useState<number>(0)
     const [spentValueMonth, setSpentValueMonth] = useState<number>(0)
     const [dizimistas, setDizimista] = useState<InterfaceSectionDashboard[]>([])
-    const saldoEnd = (inputValuesMonth ?? 0) - (spentValueMonth ?? 0)
+    const valueInputAll = (inputValuesMonth + inputValuesMonthDizimo)
+    const saldoEnd = valueInputAll - (spentValueMonth ?? 0)
 
     useEffect(() => {
         async function FetchDataPageDashboard() {
@@ -23,10 +26,13 @@ export function SectionDashboardCapela() {
             const allDizimistas = await GetAllDizimista()
             const spentValues = await getAllSpentValue()
 
+
             const inputOnlyMonth = GetOnlySpentAndInputMonth(inputValues).map((value: { valor: number }) => Number(value.valor)).reduce((valuePreviuos, valueCurrent) => valuePreviuos + valueCurrent, 0)
             const spentOnlyMonth = GetOnlySpentAndInputMonth(spentValues).map((value: { valor: number }) => Number(value.valor)).reduce((valuePreviuos, valueCurrent) => valuePreviuos + valueCurrent, 0)
+            const inputValeuDizimo = GetOnlyInputDizimo(allDizimistas).map((value: { valor: number }) => value.valor).reduce((valuePreviuos: number, valueCurrent: number) => Number(valuePreviuos) + Number(valueCurrent), 0)
 
             setDizimista(allDizimistas?.data.data)
+            setInputValuesMonthDizimo(inputValeuDizimo)
             setInputValuesMonth(inputOnlyMonth)
             setSpentValueMonth(spentOnlyMonth)
         }
@@ -35,14 +41,12 @@ export function SectionDashboardCapela() {
     }, [])
 
 
-
-
     return (
         <section className="style-sections-dashboard gap-4">
             <div className="flex flex-col gap-4">
                 <h3 className="text-primary-100 font-semibold text-[1.4rem]">Informações Gerais</h3>
                 <div className="w-full max-lg:flex-col flex items-center gap-5 justify-between">
-                    <CardResult icon={IconResult} numberResult={inputValuesMonth} textResult="Total de Entradas desse mês" />
+                    <CardResult icon={IconResult} numberResult={valueInputAll} textResult="Total de Entradas desse mês" />
                     <CardResult icon={IconResult} numberResult={spentValueMonth} className="rotate-180" textResult="Total de Saídas desse mês" />
                     <CardResult icon={IconSaldo} valueEndSaldo={saldoEnd} numberResult={saldoEnd} className={`${saldoEnd >= 0 ? "text-green-500" : "text-red-500"}`} textResult="Saldo desse Mês" />
                 </div>
@@ -50,7 +54,7 @@ export function SectionDashboardCapela() {
 
             <div className="flex flex-col pt-5 gap-5">
                 <h3 className="text-primary-100 font-semibold text-[1.4rem]">Dizimista Cadastrar</h3>
-                <div className={`${dizimistas.length > 0 ? "w-full grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4" : "flex items-center justify-center h-full w-full"}`}>
+                <div className={`${dizimistas.length > 0 ? "w-full grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] max-md:grid grid-cols-[repeat(auto-fill,minmax(auto  ,1fr))] gap-4" : "flex items-center justify-center h-full w-full"}`}>
                     {dizimistas.length > 0 ? (dizimistas.map((link) => (
                         <CardShowDizimista key={link.nome} nome={link.nome} />
                     ))) : (

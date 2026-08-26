@@ -2,6 +2,7 @@
 
 import { SideBarDashboard } from "@/src/components/layout/sideBar"
 import { linksDashboardCapela } from "@/src/constants/links-dashboard"
+import { InterfaceDataPorfileDashboard } from "@/src/interfaces/user/interface-data-porfile-dashboard"
 import { GetCapelaDados } from "@/src/services/getCapelaData"
 import { TypeSectionDashboardCapela } from "@/src/types/type-sections-dashboard"
 import { JSX, useEffect, useState } from "react"
@@ -11,24 +12,15 @@ import { SectionOfertorryoCapela } from "./sections/ofetorry"
 import { SectionPorfileCapela } from "./sections/porfile"
 import { SectionRelatorioCapela } from "./sections/relatorio"
 import { SectionUsersCapela } from "./sections/users"
-import { InterfaceDataPorfileDashboard } from "@/src/interfaces/user/interface-data-porfile-dashboard"
 
 export function DashboardCapela() {
     const [dadosCapela, setDadosCapela] = useState<InterfaceDataPorfileDashboard>()
     const [nameSection, setNameSection] = useState<TypeSectionDashboardCapela>("DASHBOARD")
-    const sectionsRender: Record<TypeSectionDashboardCapela, JSX.Element> = {
-        DASHBOARD: <SectionDashboardCapela />,
-        DIZIMO: <SectionDizimoCapela idCapela={dadosCapela?.idCapela} />,
-        OFERTORIO: <SectionOfertorryoCapela />,
-        PERFIL: <SectionPorfileCapela />,
-        RELATORIO: <SectionRelatorioCapela />,
-        USUARIOS: <SectionUsersCapela />,
-    }
 
     useEffect(() => {
         async function FetchDataCapela() {
             const { data } = await GetCapelaDados()
-            setDadosCapela({ nome: data[0], typeUser: data[1], idCapela: data[2]})
+            setDadosCapela({ nome: data[0], typeUser: data[1], idCapela: data[2] })
         }
         FetchDataCapela()
     }, [])
@@ -40,6 +32,15 @@ export function DashboardCapela() {
 
     function handleSection(name: TypeSectionDashboardCapela) {
         setNameSection(name)
+    }
+
+    const sectionsRender: Record<TypeSectionDashboardCapela, JSX.Element> = {
+        DASHBOARD: <SectionDashboardCapela />,
+        DIZIMO: <SectionDizimoCapela idCapela={dadosCapela?.idCapela} />,
+        OFERTORIO: <SectionOfertorryoCapela />,
+        PERFIL: <SectionPorfileCapela />,
+        RELATORIO: <SectionRelatorioCapela />,
+        USUARIOS: <SectionUsersCapela />,
     }
 
 
