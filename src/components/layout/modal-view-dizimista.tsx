@@ -23,7 +23,7 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleO
         }
 
         FetchDataDizimista()
-    }, [dadosDizimista])
+    }, [])
 
     console.log("VALOR DO ESTADO NO MODAL VIEW DIZIMO", openModalDeleteInputDizimo);
 
