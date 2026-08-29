@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 
 interface InterfacceModalDeleteInputValeu {
     OpenModal: boolean,
+    handleOpenModal: () => void
 }
 
 
