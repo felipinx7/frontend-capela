@@ -1,4 +1,4 @@
-import { PhotoUserDefault } from "@/src/assets/icons/image";
+import { PhotoUserDefault } from "@/src/assets/image";
 import { InterfaceDataDashboard } from "@/src/interfaces/interface-data-dashboard";
 import Image from "next/image";
 

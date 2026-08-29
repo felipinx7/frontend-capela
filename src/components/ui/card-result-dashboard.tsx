@@ -6,12 +6,12 @@ export function CardResult(props: InterfaceDashboardResult) {
             {props.valueEndSaldo !== undefined ? (
                 <div className={`${props.valueEndSaldo ?? 0 < 0 ? "text-green-500" : "text-red-500"} text-[#2D2D2D] w-full flex items-center justify-start gap-2 text-[2rem] font-semibold`}>
                     <div className="font-sa w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center"><props.icon className={`${props.className ? props.className : ""} w-6 text-white`} /></div>
-                    {props.valueEndSaldo}
+                    R$ {String(Number(props.numberResult).toFixed(2)).replace(".", ",")}
                 </div>
             ) : (
                 <div className={`text-[#2D2D2D] w-full flex items-center justify-start gap-2 text-[2rem] font-semibold`}>
                     <div className="font-sa w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center"><props.icon className={`${props.className ? props.className : ""} w-6 text-white`} /></div>
-                    {props.numberResult}
+                    R$ {String(Number(props.numberResult).toFixed(2)).replace(".", ",")}
                 </div>
 
             )}

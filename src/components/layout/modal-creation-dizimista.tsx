@@ -5,7 +5,6 @@ import { InterfaceDataPorfileDashboard } from '@/src/interfaces/user/interface-d
 import { DTODizimista, SchemaDizimista } from '@/src/schemas/schema-dizimista'
 import { CreateDizimista } from '@/src/services/CreateDizimista'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createRenderInBrowserAbortSignal } from 'next/dist/server/app-render/dynamic-rendering'
 import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'

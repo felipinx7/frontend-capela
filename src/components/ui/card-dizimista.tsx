@@ -17,6 +17,9 @@ export function CardDizimista(props: InterfaceCardDizimista) {
     const [openModalView, setOpenModalView] = useState(false)
     const [openModalAddedMoney, setOpenModalAddedMoney] = useState(false)
 
+    console.log("VALOR DO ESTADO NO CARD DIZIMO", props.openModalDeleteInputDizimo);
+
+
     return (
         <article className="flex items-center rounded-2xl bg-white border-2 border-primary-100 py-2 px-4 justify-between w-full">
             <div className="flex items-center justify-center gap-4">
@@ -38,7 +41,7 @@ export function CardDizimista(props: InterfaceCardDizimista) {
             {/* Modals utils in card  */}
             <ModalUpdateDizimista OpenModal={openMoldaUpdate} id={props.id} updateDizimista={props.UpdateDizimista} handleOpenModal={() => handleStateValeu(setOpenModalUpdate)} />
             <ModalAddedDizimista onClosed={openModalAddedMoney} handleOpenModal={() => handleStateValeu(setOpenModalAddedMoney)} idDizimista={props.id as string} idCapela={props.idCapela as string} />
-            <ModalViewDizimista OpenModal={openModalView} id={props.id} handleOpenModal={() => handleStateValeu(setOpenModalView)} />
+            <ModalViewDizimista handleOpenModalDeleteInputDizimo={props.handleOpenModalDeleteInputDizimo ?? (() => { })} openModalDeleteInputDizimo={props.openModalDeleteInputDizimo} OpenModalView={openModalView} id={props.id} handleOpenModal={() => handleStateValeu(setOpenModalView)} />
 
         </article>
     )
