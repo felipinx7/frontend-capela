@@ -1,7 +1,10 @@
-import { PickDataDizimistaModalViewDizimista } from "../types/picks/pick-data-dizimista-modal-view-dizimista";
+import { DTOUpdateInputValue } from "../schemas/schema-update-input-value";
 
 export interface InterfaceModalViewDataDizimista {
-  OpenModal: boolean;
-  id: string
-  handleOpenModal: () => void;  
+  OpenModalView: boolean;
+  openModalDeleteInputDizimo?: boolean,
+  handleOpenModalDeleteInputDizimo: () => void
+  updateDataDizimista?: (data: DTOUpdateInputValue) => void;
+  id: string;
+  handleOpenModal: () => void;
 }
