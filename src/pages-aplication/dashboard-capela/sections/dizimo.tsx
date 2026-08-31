@@ -2,7 +2,6 @@ import IconAddPeople from "@/src/assets/icons/icon-add-people";
 import IconSearch from "@/src/assets/icons/icon-search";
 import { PhotoDefaultResultFromSearch } from "@/src/assets/image";
 import { CardCreationDizimista } from "@/src/components/layout/modal-creation-dizimista";
-import { ModalDeleteInputValeu } from "@/src/components/layout/modal-delete-input-value";
 import { CardDizimista } from "@/src/components/ui/card-dizimista";
 import { InterfaceDataPorfileDashboard } from "@/src/interfaces/user/interface-data-porfile-dashboard";
 import { DTODizimista } from "@/src/schemas/schema-dizimista";
@@ -43,9 +42,6 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
         FetchDataDizimo()
     }, []
     )
-
-    console.log("VALOR DO ESTADO NA SEÇÃO DIZIMO", openModalDeleteInputDizimo);
-    
 
     return (
         <section className="style-sections-dashboard gap-4">
@@ -95,7 +91,6 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
 
             {/* modals used in section  */}
             <CardCreationDizimista idCapela={idCapela} createdDizimista={createdDizimista} handleOpenModal={handleOpenModal} onClosed={openModalCreated} />
-            <ModalDeleteInputValeu OpenModal={openModalDeleteInputDizimo} handleOpenModal={() => handleStateValeu(setOpenModalDeleteInputDizimo)} />
         </section>
     )
 }
