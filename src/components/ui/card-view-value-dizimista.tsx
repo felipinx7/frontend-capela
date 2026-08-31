@@ -3,7 +3,9 @@ import IconTrash from "@/src/assets/icons/icon-trash"
 import { DTOUpdateInputValue } from "@/src/schemas/schema-update-input-value"
 import { handleStateValeu } from "@/src/utils/handleStateValue"
 import { useState } from "react"
+import { ModalDeleteInputValeu } from "../layout/modal-delete-input-value"
 import { ModalUpdateDizimo } from "../layout/modal-update-dizimo"
+import { log } from "console"
 
 interface InterfaceCardViewValueDizimista {
     deleteInputDizimo: () => void
@@ -21,9 +23,6 @@ export function CardViewValueDizimista(props: InterfaceCardViewValueDizimista) {
 
     const [openModalUpdateInputDizimo, setOpenModalUpdateInputDizimo] = useState(false)
     const [openModalDeleteInputDizimo, setOpenModalDeleteInputDizimo] = useState(false)
-
-    console.log("VALOR DO ESTADO NNO CARD VIER", props.hadleOpenModalInputDizimo);
-
 
     return (
         <article className="w-full flex items-center p-2 border-2 border-primary-100 rounded-[0.4rem] justify-between">
@@ -46,6 +45,13 @@ export function CardViewValueDizimista(props: InterfaceCardViewValueDizimista) {
                 id={props.idInputDizimo}
                 handleOpenModal={() => handleStateValeu(setOpenModalUpdateInputDizimo)}
             />
+
+            <ModalDeleteInputValeu
+                id={props.idInputDizimo}
+                OpenModal={props.openModalDeleteInputDizimo}
+                handleOpenModal={props.handleOpenModalDeleteInputDizimo}
+            />
+
         </article>
     )
 }
