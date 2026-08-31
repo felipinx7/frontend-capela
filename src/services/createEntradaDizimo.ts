@@ -1,6 +1,5 @@
 import { api } from "../config/axios.config";
 import { DTOAddedValue } from "../schemas/schema-added-valeu";
-import { PickModalAddedValueDizimista } from "../types/picks/pick-modal-added-value-dizimista";
 
 export async function CreateEntradaDizimo(data: DTOAddedValue) {
   try {
