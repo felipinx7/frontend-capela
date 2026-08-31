@@ -25,9 +25,6 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleO
         FetchDataDizimista()
     }, [])
 
-    console.log("VALOR DO ESTADO NO MODAL VIEW DIZIMO", openModalDeleteInputDizimo);
-
-
     return ReactDOM.createPortal(
         <section className={`${OpenModalView ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-[0] bg-black/60 transition-all ease-in-out duration-500 absolute w-full h-screen`}>
             <div className='w-full h-screen flex items-center justify-center'>
@@ -73,7 +70,8 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleO
                                             valueDizimo={value.valor}
                                             valueMonth={GetMounthName(Number(String(value.data).split("-")[1])) ?? ""}
                                             idInputDizimo={value.id}
-                                            key={value.id} />
+                                            key={value.id}
+                                        />
                                     ))
                                 ) : (
                                     <div className='h-[px] flex items-center justify-center'>

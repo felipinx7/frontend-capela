@@ -10,8 +10,9 @@ import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-export function ModalUpdateDizimo({OpenModalView, handleOpenModal, handleOpenModalDeleteInputDizimo, id, openModalDeleteInputDizimo, updateDataDizimista}: InterfaceModalViewDataDizimista) {
+export function ModalUpdateDizimo({ OpenModalView, handleOpenModal, handleOpenModalDeleteInputDizimo, id, openModalDeleteInputDizimo, updateDataDizimista }: InterfaceModalViewDataDizimista) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<DTOUpdateInputValue>({ resolver: zodResolver(SachemaUpdateInputValeu) })
+
 
     async function onSubmit(data: PickModalAddedValueDizimista) {
         const response = await updateInputDizimo(id, data)
@@ -19,12 +20,11 @@ export function ModalUpdateDizimo({OpenModalView, handleOpenModal, handleOpenMod
             toast.error("Error ao atualizar a entrada, tente novamente!!")
         } else {
             updateDataDizimista?.(data)
-            toast.success("Entrada Atualizada com sucesso!!")
+            handleOpenModal()
             reset()
-            handleOpenModalDeleteInputDizimo()
+            toast.success("Entrada Atualizada com sucesso!!")
         }
     }
-
 
     return ReactDOM.createPortal(
         <section className={`${OpenModalView ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} bg-black/60 transition-all z-[99999] ease-in-out duration-500 absolute w-full h-screen`}>
