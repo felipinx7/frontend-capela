@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-export function ModalUpdateDizimo({ OpenModalView, handleOpenModal, handleOpenModalDeleteInputDizimo, id, openModalDeleteInputDizimo, updateDataDizimista }: InterfaceModalViewDataDizimista) {
+export function ModalUpdateDizimo({ OpenModalView, handleOpenModal, handleOpenModalDeleteInputDizimo, id, updateDataDizimista }: InterfaceModalViewDataDizimista) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<DTOUpdateInputValue>({ resolver: zodResolver(SachemaUpdateInputValeu) })
 
 

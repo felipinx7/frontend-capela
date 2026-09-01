@@ -23,7 +23,6 @@ export function ModalUpdateDizimista({ id, handleOpenModal, updateDizimista, Ope
         }
     }
 
-
     return ReactDOM.createPortal(
         <section className={`${OpenModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-0 bg-black/60 transition-all ease-in-out duration-500 absolute w-full h-screen`}>
             <div className='w-full h-screen flex items-center justify-center'>

@@ -9,17 +9,23 @@ import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { CardViewValueDizimista } from '../ui/card-view-value-dizimista'
 
-export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleOpenModalDeleteInputDizimo, openModalDeleteInputDizimo, updateDataDizimista }: InterfaceModalViewDataDizimista) {
+export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, openModalDeleteInputDizimo, handleOpenModalDeleteInputDizimo }: InterfaceModalViewDataDizimista) {
     const [dadosDizimista, setDizimista] = useState<PickDataDizimistaModalViewDizimista>()
 
     function updateInputValue(idEntrada: string, data: DTOUpdateInputValue) {
         setDizimista((prev) => prev ? { ...prev, entradasDizimo: prev.entradasDizimo?.map((entrada) => (entrada.id === idEntrada ? { ...entrada, ...data } : entrada)), } : prev)
     }
+    function handleDeleteInput(id: string) {
+        setDizimista((prev) => {
+            if (!prev) return prev;
+            return { ...prev, entradasDizimo: prev.entradasDizimo?.filter((input) => input.id !== id) }
+        })
+    }
 
     useEffect(() => {
         async function FetchDataDizimista() {
             const response = await GetUniqueDizimista(id)
-            setDizimista({ nome: response?.data.data.nome, entradasDizimo: response?.data.data.entrada })
+            setDizimista({ nome: response?.data.data.nome, entradasDizimo: response?.data.data.entrada, id })
         }
 
         FetchDataDizimista()
@@ -42,7 +48,7 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleO
                             <img src={PhotoUserDefault.src} className='w-[50px]' />
                             <div className='flex flex-col'>
                                 <h1 className='font-bold text-[1.1rem] text-primary-100'>{dadosDizimista?.nome}</h1>
-                                <p className='font-normal text-[0.9rem]'>Dizimista</p>
+                                <p className='font-normal text-[0.9rem] text-primary-100'>Dizimista</p>
                             </div>
                         </div>
 
@@ -61,6 +67,7 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleO
                                 {dadosDizimista?.entradasDizimo?.length ?? 0 > 0 ? (
                                     dadosDizimista?.entradasDizimo?.map((value) => (
                                         <CardViewValueDizimista
+                                            onDeleteInput={handleDeleteInput}
                                             handleOpenModalDeleteInputDizimo={handleOpenModalDeleteInputDizimo}
                                             hadleOpenModalInputDizimo={handleOpenModal}
                                             openModalDeleteInputDizimo={openModalDeleteInputDizimo as boolean}
@@ -75,7 +82,7 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, handleO
                                     ))
                                 ) : (
                                     <div className='h-[px] flex items-center justify-center'>
-                                        <h1 className='text-primary-100 text-[0.8rem]'>Nenhuma entrada registrado no mês</h1>
+                                        <h1 className='text-primary-100 text-[0.8rem]'>Nenhuma entrada registrado no ano</h1>
                                     </div>
                                 )}
                             </div>

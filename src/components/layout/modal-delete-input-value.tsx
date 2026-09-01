@@ -6,18 +6,20 @@ interface InterfacceModalDeleteInputValeu {
     OpenModal: boolean,
     handleOpenModal: () => void
     id?: string
+    onDeleteInput: (id: string) => void;
 }
 
 
-export function ModalDeleteInputValeu({ OpenModal, handleOpenModal, id }: InterfacceModalDeleteInputValeu) {
+export function ModalDeleteInputValeu({ OpenModal, handleOpenModal, id , onDeleteInput}: InterfacceModalDeleteInputValeu) {
 
     async function DeleteInputDizimos(id: string) {
         const response = await DeleteInputDizimo(id)
+        onDeleteInput(id)
         handleOpenModal()
     }
 
     return ReactDOM.createPortal(
-        <section className={`${OpenModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-[999999999999999] bg-black/20 transition-all ease-in-out px-4 duration-500 absolute w-full h-screen`}>
+        <section className={`${OpenModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-[999999999999999] bg-black/50 transition-all ease-in-out px-4 duration-500 absolute w-full h-screen`}>
             <div className='w-full h-screen flex items-center justify-center'>
                 <div className={`bg-white transition-all ease-in-out duration-500 ${OpenModal ? "scale-100 opacity-100" : "scale-150 opacity-0"} flex items-center justify-center w-[34%] max-lg:w-[80%] flex-col rounded-lg gap-3 h-auto p-10`}>
                     <div className="w-[90px] h-[90px] flex shadow-2xl items-center justify-center bg-primary-100 p-4 rounded-full">

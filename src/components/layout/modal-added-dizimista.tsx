@@ -18,6 +18,7 @@ export function ModalAddedDizimista({ idCapela, idDizimista, handleOpenModal, on
         if (response === undefined) {
             toast.error("Error ao cadastrar dízimo!!")
         } else {
+            reset()
             toast.success("Dízimo adicionado com sucesso!!")
             handleOpenModal()
         }
@@ -41,7 +42,7 @@ export function ModalAddedDizimista({ idCapela, idDizimista, handleOpenModal, on
                             <p className='text-[0.8rem] text-primary-100'>Data da devolução</p>
 
                             <div className='relative w-full'>
-                                <input {...register("data", { valueAsDate: true })}  minLength={0.1} type="date" className="w-full pl-8 outline-none placeholder:text-[0.7rem] placeholder:text-primary-100/70 text-primary-100 text-[0.7rem] rounded-full p-3 border border-gray " placeholder='Digite o nome do dizimista' />
+                                <input {...register("data", { valueAsDate: true })} minLength={0.1} type="date" className="w-full pl-8 outline-none placeholder:text-[0.7rem] placeholder:text-primary-100/70 text-primary-100 text-[0.7rem] rounded-full p-3 border border-gray " placeholder='Digite o nome do dizimista' />
                                 <IconCalendar className='w-4 absolute top-3 left-3 h-5 text-primary-100' />
                             </div>
                             {errors.data && (
