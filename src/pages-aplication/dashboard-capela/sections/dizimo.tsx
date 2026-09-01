@@ -22,6 +22,9 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
         setDizimista((prev) => [...prev, dizimista])
     }
 
+    console.log("fawkjf", dizimistas.map((dizimistas) => dizimistas.entradas));
+
+
     function updateDizimista(dizimistas: DTODizimistaUpdate) {
         setDizimista((prev) => prev.map((user) => (user.id === dizimistas.id ? { ...user, nome: dizimistas.nome ?? user.nome } : user)))
     }
@@ -69,6 +72,7 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
             <div className="flex overflow-auto h-[65vh] max-lg:h-screen max w-full flex-col gap-2">
                 {dizimistasFiltered.length > 0 ? dizimistasFiltered.map((dizimista) => (
                     <CardDizimista
+                    
                         UpdateDizimista={updateDizimista}
                         id={dizimista.id as string}
                         handleModaAddedMoney={handleModalUpdate}
