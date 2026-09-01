@@ -5,18 +5,18 @@ import { handleStateValeu } from "@/src/utils/handleStateValue"
 import { useState } from "react"
 import { ModalDeleteInputValeu } from "../layout/modal-delete-input-value"
 import { ModalUpdateDizimo } from "../layout/modal-update-dizimo"
-import { log } from "console"
 
 interface InterfaceCardViewValueDizimista {
     deleteInputDizimo: () => void
     updateInputDizimo: (data: DTOUpdateInputValue) => void
     openModalDeleteInputDizimo: boolean,
+    onDeleteInput: (id: string) => void,
     handleOpenModalDeleteInputDizimo: () => void
     hadleOpenModalInputDizimo: () => void,
     valueMonth: string,
     valueDizimo: number,
     idInputDizimo: string,
-    confirmDeleteInputValeuDizimo: boolean
+    confirmDeleteInputValeuDizimo: boolean,
 }
 
 export function CardViewValueDizimista(props: InterfaceCardViewValueDizimista) {
@@ -47,6 +47,7 @@ export function CardViewValueDizimista(props: InterfaceCardViewValueDizimista) {
             />
 
             <ModalDeleteInputValeu
+                onDeleteInput={props.onDeleteInput}
                 id={props.idInputDizimo}
                 OpenModal={props.openModalDeleteInputDizimo}
                 handleOpenModal={props.handleOpenModalDeleteInputDizimo}
