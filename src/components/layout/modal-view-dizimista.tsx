@@ -13,7 +13,14 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, openMod
     const [dadosDizimista, setDizimista] = useState<PickDataDizimistaModalViewDizimista>()
 
     function updateInputValue(idEntrada: string, data: DTOUpdateInputValue) {
-        setDizimista((prev) => prev ? { ...prev, entradasDizimo: prev.entradasDizimo?.map((entrada) => (entrada.id === idEntrada ? { ...entrada, ...data } : entrada)), } : prev)
+        setDizimista((prev) => {
+            if (!prev) return prev
+            console.log("VALOR DA DATA: ", GetMounthName(data.data));
+            console.log("VALOR DO VALOR:", data.valor);
+
+            return { ...prev,entradasDizimo: prev.entradasDizimo?.map((input) => input.id === idEntrada ? input.valor = data.valor : input) }
+
+        })
     }
     function handleDeleteInput(id: string) {
         setDizimista((prev) => {
@@ -75,7 +82,7 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, openMod
                                             updateInputDizimo={(data) => updateInputValue(value.id, data)}
                                             confirmDeleteInputValeuDizimo={false}
                                             valueDizimo={value.valor}
-                                            valueMonth={GetMounthName(Number(String(value.data).split("-")[1])) ?? ""}
+                                            valueMonth={GetMounthName(value.data)}
                                             idInputDizimo={value.id}
                                             key={value.id}
                                         />
