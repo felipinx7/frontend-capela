@@ -4,22 +4,29 @@ import { InterfaceModalUpdateDizimista } from '@/src/interfaces/interface-modal-
 import { DTODizimistaUpdate, SchemaDizimistaUpdate } from '@/src/schemas/schema-dizimista-update'
 import { UpdateDizimista } from '@/src/services/UpdateDizimista'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 export function ModalUpdateDizimista({ id, handleOpenModal, updateDizimista, OpenModal }: InterfaceModalUpdateDizimista) {
-    const { register, formState: { errors }, handleSubmit, reset, } = useForm<DTODizimistaUpdate>({ resolver: zodResolver(SchemaDizimistaUpdate) })
+    const { register, formState: { errors }, handleSubmit, } = useForm<DTODizimistaUpdate>({ resolver: zodResolver(SchemaDizimistaUpdate) })
+    const [loading, setLoading] = useState(false)
 
     async function onSubmit(data: DTODizimistaUpdate) {
-        const response = await UpdateDizimista({ id: id, nome: data.nome })
+        setLoading(true)
+        try {
+            const response = await UpdateDizimista({ id: id, nome: data.nome })
 
-        if (response === undefined) {
-            toast.error("Digite um nome diferente do anterior")
-        } else {
-            updateDizimista({ nome: data.nome, id: id })
-            toast.success("Dizimista Atualizado com sucesso!!")
-            handleOpenModal()
+            if (response === undefined) {
+                toast.error("Digite um nome diferente do anterior")
+            } else {
+                updateDizimista({ nome: data.nome, id: id })
+                toast.success("Dizimista Atualizado com sucesso!!")
+                handleOpenModal()
+            }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -49,8 +56,8 @@ export function ModalUpdateDizimista({ id, handleOpenModal, updateDizimista, Ope
                         </div>
 
                         <div className='w-full flex items-center justify-center mt-4'>
-                            <button type="submit" className='w-auto relative  rounded-[2.1rem] shadow-2xl cursor-pointer hover: py-2  px-8 text-[0.9rem] text-white bg-primary-100'>
-                                Adicionar Dizimista
+                            <button disabled={loading} type="submit" className={`w-auto relative rounded-[2.1rem] shadow-2xl py-2 px-8 text-[0.9rem] text-white ${loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-100 cursor-pointer hover:bg-[#08265d]'}`}>
+                                {loading ? 'Atualizando...' : 'Atualizar Dizimista'}
                             </button>
                         </div>
                     </div>

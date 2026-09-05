@@ -5,22 +5,29 @@ import { InterfaceModalAddedValue } from '@/src/interfaces/interface-modal-added
 import { DTOAddedValue, schemaAddedValue } from '@/src/schemas/schema-added-valeu'
 import { CreateEntradaDizimo } from '@/src/services/createEntradaDizimo'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 export function ModalAddedDizimista({ idCapela, idDizimista, handleOpenModal, onClosed }: InterfaceModalAddedValue) {
     const { register, reset, formState: { errors }, handleSubmit, } = useForm<DTOAddedValue>({ resolver: zodResolver(schemaAddedValue) })
+    const [loading, setLoading] = useState(false)
 
     async function onSubmit(datas: DTOAddedValue) {
-        const response = await CreateEntradaDizimo({ idCapela: idCapela, idDizimista: idDizimista, data: datas.data, valor: datas.valor })
+        setLoading(true)
+        try {
+            const response = await CreateEntradaDizimo({ idCapela: idCapela, idDizimista: idDizimista, data: datas.data, valor: datas.valor })
 
-        if (response === undefined) {
-            toast.error("Error ao cadastrar dízimo!!")
-        } else {
-            reset()
-            toast.success("Dízimo adicionado com sucesso!!")
-            handleOpenModal()
+            if (response === undefined) {
+                toast.error("Error ao cadastrar dízimo!!")
+            } else {
+                reset()
+                toast.success("Dízimo adicionado com sucesso!!")
+                handleOpenModal()
+            }
+        } finally {
+            setLoading(false)
         }
 
     }
@@ -63,8 +70,8 @@ export function ModalAddedDizimista({ idCapela, idDizimista, handleOpenModal, on
                         </div>
 
                         <div className='w-full flex items-center justify-center mt-4'>
-                            <button type="submit" className='w-auto relative  rounded-[2.1rem] shadow-2xl cursor-pointer hover: py-2  px-8 text-[0.9rem] text-white bg-primary-100'>
-                                Adicionar Dizimista
+                            <button disabled={loading} type="submit" className={`w-auto relative rounded-[2.1rem] shadow-2xl py-2 px-8 text-[0.9rem] text-white ${loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-100 cursor-pointer hover:bg-[#08265d]'}`}>
+                                {loading ? 'Cadastrando...' : 'Adicionar Dizimista'}
                             </button>
                         </div>
                     </div>

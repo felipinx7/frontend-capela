@@ -6,30 +6,37 @@ import { DTOUpdateInputValue, SachemaUpdateInputValeu } from '@/src/schemas/sche
 import { updateInputDizimo } from '@/src/services/updateInputDizimo'
 import { PickModalAddedValueDizimista } from '@/src/types/picks/pick-modal-added-value-dizimista'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-export function ModalUpdateDizimo({ OpenModalView, handleOpenModal, handleOpenModalDeleteInputDizimo, id, updateDataDizimista }: InterfaceModalViewDataDizimista) {
+export function ModalUpdateDizimo({ OpenModalView, handleOpenModal, id, updateDataDizimista }: InterfaceModalViewDataDizimista) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<DTOUpdateInputValue>({ resolver: zodResolver(SachemaUpdateInputValeu) })
+    const [loading, setLoading] = useState(false)
 
 
     async function onSubmit(data: PickModalAddedValueDizimista) {
-        const response = await updateInputDizimo(id, data)
-        if (response === undefined) {
-            toast.error("Error ao atualizar a entrada, tente novamente!!")
-        } else {
-            updateDataDizimista?.(data)
-            handleOpenModal()
-            reset()
-            toast.success("Entrada Atualizada com sucesso!!")
+        setLoading(true)
+        try {
+            const response = await updateInputDizimo(id, data)
+            if (response === undefined) {
+                toast.error("Error ao atualizar a entrada, tente novamente!!")
+            } else {
+                updateDataDizimista?.(data)
+                handleOpenModal()
+                reset()
+                toast.success("Entrada Atualizada com sucesso!!")
+            }
+        } finally {
+            setLoading(false)
         }
     }
 
     return ReactDOM.createPortal(
-        <section className={`${OpenModalView ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} bg-black/60 transition-all z-[99999] ease-in-out duration-500 absolute w-full h-screen`}>
+        <section className={`${OpenModalView ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-0 bg-black/60 transition-all ease-in-out duration-500 absolute w-full h-screen`}>
             <div className='w-full h-screen flex items-center justify-center'>
-                <form onSubmit={handleSubmit(onSubmit)} className={`bg-white transition-all ease-in-out duration-500 ${OpenModalView ? "scale-100 opacity-100" : "scale-150 opacity-0"} w-[30%] max-lg:w-[80%] flex flex-col rounded-lg h-auto p-10`}>
+                <form onSubmit={handleSubmit(onSubmit)} className={`bg-white transition-all ease-in-out duration-500 ${OpenModalView ? "scale-100 opacity-100" : "scale-150 opacity-0"} w-[30%] max-lg:w-[80%] flex flex-col gap-3 rounded-lg h-auto p-10`}>
                     <div className='w-full flex items-center justify-between'>
                         <h1 className="text-primary-100 font-medium text-[1.1rem]">Editar Valor Dízimo</h1>
                         <button onClick={handleOpenModal} className='hover:bg-gray-400/50 w-8 rounded-[0.3rem] cursor-pointer h-8 flex items-center justify-center' type='button'>
@@ -64,8 +71,8 @@ export function ModalUpdateDizimo({ OpenModalView, handleOpenModal, handleOpenMo
 
 
                     <div className='w-full flex items-center justify-center mt-4'>
-                        <button type="submit" className='w-auto relative  rounded-[2.1rem] shadow-2xl cursor-pointer hover: py-2  px-8 text-[0.9rem] text-white bg-primary-100'>
-                            Adicionar Dizimista
+                        <button disabled={loading} type="submit" className={`w-auto relative rounded-[2.1rem] shadow-2xl py-2 px-8 text-[0.9rem] text-white ${loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-100 cursor-pointer hover:bg-[#08265d]'}`}>
+                            {loading ? 'Atualizando...' : 'Atualizar Dízimo'}
                         </button>
                     </div>
                 </form>

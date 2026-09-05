@@ -5,6 +5,7 @@ import { InterfaceDataPorfileDashboard } from '@/src/interfaces/user/interface-d
 import { DTODizimista, SchemaDizimista } from '@/src/schemas/schema-dizimista'
 import { CreateDizimista } from '@/src/services/CreateDizimista'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -21,18 +22,29 @@ interface InterfaceModalCreationDizimista {
 
 export function CardCreationDizimista({ idCapela, handleOpenModal, createdDizimista, onClosed }: InterfaceModalCreationDizimista) {
     const { register, reset, formState: { errors }, handleSubmit, } = useForm<DTODizimista>({ resolver: zodResolver(SchemaDizimista) })
+    const [loading, setLoading] = useState(false)
 
     async function onSubmit(data: DTODizimista) {
-        const response = await CreateDizimista({ idCapela, nome: data.nome })
+        setLoading(true)
+        try {
+            const response = await CreateDizimista({ idCapela, nome: data.nome })
 
-        if (response?.status === undefined) {
-            toast.error("Dizimista já cadastrado com esse nome.")
-            reset()
-        } else {
-            toast.success("Dizimista cadastrado com sucesso!!")
-            createdDizimista({ nome: data.nome as string, typeUser: "Dizimista", idCapela: idCapela as string })
-            handleOpenModal()
-            reset()
+            if (response?.status === undefined) {
+                toast.error("Dizimista já cadastrado com esse nome.")
+                reset()
+            } else {
+                toast.success("Dizimista cadastrado com sucesso!!")
+                createdDizimista({
+                    id: response.data?.data?.id ?? response.data?.id,
+                    nome: data.nome as string,
+                    typeUser: "Dizimista",
+                    idCapela: idCapela as string,
+                })
+                handleOpenModal()
+                reset()
+            }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -64,10 +76,10 @@ export function CardCreationDizimista({ idCapela, handleOpenModal, createdDizimi
                         </div>
 
                         <div className='w-full flex items-center justify-center mt-4'>
-                            <button type="submit" className='w-auto relative  rounded-[2.1rem] shadow-2xl cursor-pointer hover: py-2  px-8 text-[0.9rem] text-white bg-primary-100'>
-                                Adicionar Dizimista
+                            <button disabled={loading} type="submit" className={`w-auto relative rounded-[2.1rem] shadow-2xl py-2 px-8 text-[0.9rem] text-white ${loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-100 cursor-pointer hover:bg-[#08265d]'}`}>
+                                {loading ? 'Cadastrando...' : 'Adicionar Dizimista'}
                             </button>
-                        </div>
+                        </div>ma
                     </div>
                 </form>
             </div>
