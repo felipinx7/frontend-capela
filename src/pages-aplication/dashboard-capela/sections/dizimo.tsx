@@ -22,11 +22,12 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
         setDizimista((prev) => [...prev, dizimista])
     }
 
-    console.log("fawkjf", dizimistas.map((dizimistas) => dizimistas.entradas));
-
-
     function updateDizimista(dizimistas: DTODizimistaUpdate) {
         setDizimista((prev) => prev.map((user) => (user.id === dizimistas.id ? { ...user, nome: dizimistas.nome ?? user.nome } : user)))
+    }
+
+    function handleDeleteDizimista(id: string) {
+        setDizimista((prev) => prev.filter((dizimistas) => dizimistas.id !== id ? dizimistas : null))
     }
 
     function handleModalUpdate() {
@@ -45,6 +46,8 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
         FetchDataDizimo()
     }, []
     )
+
+
 
     return (
         <section className="style-sections-dashboard gap-4">
@@ -72,7 +75,7 @@ export function SectionDizimoCapela({ idCapela }: DTODizimista) {
             <div className="flex overflow-auto h-[65vh] max-lg:h-screen max w-full flex-col gap-2">
                 {dizimistasFiltered.length > 0 ? dizimistasFiltered.map((dizimista) => (
                     <CardDizimista
-                    
+                        onDeleteDizimista={() => handleDeleteDizimista(dizimista.id as string)}
                         UpdateDizimista={updateDizimista}
                         id={dizimista.id as string}
                         handleModaAddedMoney={handleModalUpdate}

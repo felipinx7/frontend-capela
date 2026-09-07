@@ -4,9 +4,10 @@ import { PickCardDizimista } from "../types/dizimista/pick-card-dizimista";
 export interface InterfaceCardDizimista extends PickCardDizimista {
   handleModalUpdate: () => void;
   handleModaAddedMoney: () => void;
-  handleModalDelete: () => void
-  openModalDeleteInputDizimo?: boolean,
-  handleOpenModalDeleteInputDizimo?: () => void,
+  handleModalDelete: () => void;
+  openModalDeleteInputDizimo?: boolean;
+  onDeleteDizimista: (id: string) => void;
+  handleOpenModalDeleteInputDizimo?: () => void;
   handleModalView: () => void;
   id: string;
   idCapela?: string;

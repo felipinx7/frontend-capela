@@ -24,22 +24,23 @@ export default function LoginPage() {
 
   async function onSubmit(data: DTOLogin) {
     setLoading(true)
-    const response = await Login(data);
+    try {
+      const response = await Login(data);
 
-    if (response === undefined) {
-      reset()
+      if (response === undefined) {
+        reset()
+        toast.error("Credenciais inválidas!!");
+        return
+      }
+
+      if (response.data === "ADMINISTRADOR") {
+        router.push("/dashboard-capela")
+      } else {
+        router.push("/dashboard-usuario")
+      }
+    } finally {
       setLoading(false)
-      toast.error("Credenciais inválidas!!");
     }
-
-    if (response.data === "ADMINISTRADOR") {
-      router.push("/dashboard-capela")
-    } else {
-      router.push("/dashboard-usuario")
-    }
-
-    setLoading(false)
-    return response;
   }
 
   function handleViewPassword() {
@@ -116,8 +117,8 @@ export default function LoginPage() {
                 )}
               </div>
             </div>
-            <button disabled={loading ? true : false} type="submit" className={`${loading ? "bg-gray-500 text-gray-500" : " bg-primary-100 cursor-pointer hover:bg-[#08265d]"} mt-4 shadow-xl transition-all ease-in-out duration-500 w-[50%] max-lg:w-full p-3 rounded-full text-white font-semibold`}>
-              {loading ? "LOGANDO..." : "FAZER LOGIN"}
+            <button disabled={loading} type="submit" className={`${loading ? "bg-gray-500 cursor-not-allowed" : "bg-primary-100 cursor-pointer hover:bg-[#08265d]"} mt-4 shadow-xl transition-all ease-in-out duration-500 w-[50%] max-lg:w-full p-3 rounded-full text-white font-semibold`}>
+              {loading ? "Logando..." : "Fazer login"}
             </button>
           </form>
         </div>
