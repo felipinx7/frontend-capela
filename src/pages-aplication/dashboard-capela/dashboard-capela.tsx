@@ -3,6 +3,8 @@
 import { SideBarDashboard } from "@/src/components/layout/sideBar"
 import { linksDashboardCapela } from "@/src/constants/links-dashboard"
 import { InterfaceDataPorfileDashboard } from "@/src/interfaces/user/interface-data-porfile-dashboard"
+import { Usuario } from "@/src/interfaces/user/interface-user"
+import { GetAllUsuario } from "@/src/services/getAllUsuario"
 import { GetCapelaDados } from "@/src/services/getCapelaData"
 import { TypeSectionDashboardCapela } from "@/src/types/type-sections-dashboard"
 import { JSX, useEffect, useState } from "react"
@@ -20,7 +22,21 @@ export function DashboardCapela() {
     useEffect(() => {
         async function FetchDataCapela() {
             const { data } = await GetCapelaDados()
-            setDadosCapela({ nome: data[0], typeUser: data[1], idCapela: data[2] })
+            const responseUsers = await GetAllUsuario()
+            const usersData = responseUsers?.data
+            const usuarios: Usuario[] = Array.isArray(usersData)
+                ? usersData
+                : Array.isArray(usersData?.data)
+                    ? usersData.data
+                    : Array.isArray(usersData?.data?.data)
+                        ? usersData.data.data
+                        : Array.isArray(usersData?.usuarios)
+                            ? usersData.usuarios
+                            : []
+            const nomeAtual = String(data[0]).trim().toLocaleUpperCase()
+            const usuarioAtual = usuarios.find((usuario) => String(usuario.nome).trim().toLocaleUpperCase() === nomeAtual && usuario.idCapela === data[2])
+                ?? usuarios.find((usuario) => usuario.idCapela === data[2])
+            setDadosCapela({ nome: data[0], typeUser: data[1], idCapela: data[2], idUsuario: usuarioAtual?.id ?? data[3] })
         }
         FetchDataCapela()
     }, [])
@@ -37,10 +53,10 @@ export function DashboardCapela() {
     const sectionsRender: Record<TypeSectionDashboardCapela, JSX.Element> = {
         DASHBOARD: <SectionDashboardCapela />,
         DIZIMO: <SectionDizimoCapela idCapela={dadosCapela?.idCapela} />,
-        OFERTORIO: <SectionOfertorryoCapela />,
+        OFERTORIO: <SectionOfertorryoCapela idCapela={dadosCapela?.idCapela} idUsuario={dadosCapela?.idUsuario} />,
         PERFIL: <SectionPorfileCapela />,
         RELATORIO: <SectionRelatorioCapela />,
-        USUARIOS: <SectionUsersCapela />,
+        USUARIOS: <SectionUsersCapela idCapela={dadosCapela?.idCapela} />,
     }
 
 

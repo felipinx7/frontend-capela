@@ -7,6 +7,7 @@ import { InterfaceCardDizimista } from "@/src/interfaces/interface-card-dizimist
 import { handleStateValeu } from "@/src/utils/handleStateValue";
 import { useState } from "react";
 import { ModalAddedDizimista } from "../layout/modal-added-dizimista";
+import { ModalDeleteDizimista } from "../layout/modal-delete-dizimista";
 import { ModalUpdateDizimista } from "../layout/modal-update-dizimista";
 import { ModalViewDizimista } from "../layout/modal-view-dizimista";
 
@@ -16,6 +17,7 @@ export function CardDizimista(props: InterfaceCardDizimista) {
     const [openModalDelete, setOpenModalDelete] = useState(false)
     const [openModalView, setOpenModalView] = useState(false)
     const [openModalAddedMoney, setOpenModalAddedMoney] = useState(false)
+
 
     return (
         <article className="flex items-center rounded-2xl bg-white border-2 border-primary-100 py-2 px-4 justify-between w-full">
@@ -28,7 +30,7 @@ export function CardDizimista(props: InterfaceCardDizimista) {
                 </div>
             </div>
 
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-3">
                 <button onClick={() => handleStateValeu(setOpenModalUpdate)} className="w-6 h-6 cursor-pointer hover:bg-primary-100/80 bg-primary-100 rounded-[5.25px] flex items-center justify-center"><IconPencil className="w-3 text-white" /></button>
                 <button onClick={() => handleStateValeu(setOpenModalAddedMoney)} className="w-6 h-6 cursor-pointer hover:bg-primary-100/80 bg-primary-100 rounded-[5.25px] flex items-center justify-center"><IconMoney className="w-3 text-white" /></button>
                 <button onClick={() => handleStateValeu(setOpenModalView)} className="w-6 h-6 cursor-pointer hover:bg-[#FACC15]/80 bg-[#FACC15] rounded-[5.25px] flex items-center justify-center"><IconEye className="w-3 text-white" /></button>
@@ -39,7 +41,7 @@ export function CardDizimista(props: InterfaceCardDizimista) {
             <ModalUpdateDizimista OpenModal={openMoldaUpdate} id={props.id} updateDizimista={props.UpdateDizimista} handleOpenModal={() => handleStateValeu(setOpenModalUpdate)} />
             <ModalAddedDizimista onClosed={openModalAddedMoney} handleOpenModal={() => handleStateValeu(setOpenModalAddedMoney)} idDizimista={props.id as string} idCapela={props.idCapela as string} />
             <ModalViewDizimista handleOpenModalDeleteInputDizimo={props.handleOpenModalDeleteInputDizimo ?? (() => { })} openModalDeleteInputDizimo={props.openModalDeleteInputDizimo} OpenModalView={openModalView} id={props.id} handleOpenModal={() => handleStateValeu(setOpenModalView)} />
-        
+            <ModalDeleteDizimista onDeleteDizimista={() => props.onDeleteDizimista(props.id)} id={props.id} onOpenModal={() => handleStateValeu(setOpenModalDelete)} openModal={openModalDelete} />
         </article>
     )
 }

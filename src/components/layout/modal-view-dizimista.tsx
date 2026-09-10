@@ -15,13 +15,18 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, openMod
     function updateInputValue(idEntrada: string, data: DTOUpdateInputValue) {
         setDizimista((prev) => {
             if (!prev) return prev
-            console.log("VALOR DA DATA: ", GetMounthName(data.data));
-            console.log("VALOR DO VALOR:", data.valor);
 
-            return { ...prev,entradasDizimo: prev.entradasDizimo?.map((input) => input.id === idEntrada ? input.valor = data.valor : input) }
+            return {
+                ...prev,
+                entradasDizimo: prev.entradasDizimo?.map((input) => input.id === idEntrada
+                    ? { ...input, valor: data.valor, data: data.data }
+                    : input,
+                ),
+            }
 
         })
     }
+
     function handleDeleteInput(id: string) {
         setDizimista((prev) => {
             if (!prev) return prev;
@@ -30,16 +35,18 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, openMod
     }
 
     useEffect(() => {
+        if (!OpenModalView) return
+
         async function FetchDataDizimista() {
             const response = await GetUniqueDizimista(id)
             setDizimista({ nome: response?.data.data.nome, entradasDizimo: response?.data.data.entrada, id })
         }
 
         FetchDataDizimista()
-    }, [])
+    }, [OpenModalView, id])
 
     return ReactDOM.createPortal(
-        <section className={`${OpenModalView ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-[0] bg-black/60 transition-all ease-in-out duration-500 absolute w-full h-screen`}>
+        <section className={`${OpenModalView ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-0 bg-black/60 transition-all ease-in-out duration-500 absolute w-full h-screen`}>
             <div className='w-full h-screen flex items-center justify-center'>
                 <div className={`bg-white transition-all ease-in-out duration-500 ${OpenModalView ? "scale-100 opacity-100" : "scale-150 opacity-0"} w-[30%] max-lg:w-[80%] flex flex-col rounded-lg h-auto p-10`}>
                     <div className='flex gap-3 flex-col'>
@@ -71,7 +78,7 @@ export function ModalViewDizimista({ handleOpenModal, id, OpenModalView, openMod
                             </div>
 
                             <div className='w-full max-h-[300px] mt-2 gap-3 overflow-auto items-center justify-start flex flex-col'>
-                                {dadosDizimista?.entradasDizimo?.length ?? 0 > 0 ? (
+                                {dadosDizimista?.entradasDizimo && dadosDizimista.entradasDizimo.length > 0 ? (
                                     dadosDizimista?.entradasDizimo?.map((value) => (
                                         <CardViewValueDizimista
                                             onDeleteInput={handleDeleteInput}
